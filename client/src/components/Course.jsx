@@ -11,6 +11,7 @@ import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import SaveIcon from '@mui/icons-material/Save';
 import { useHistory, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import Todo from './Todo.jsx';
 import Lectures from './Lectures.jsx';
@@ -38,19 +39,15 @@ export default function Course() {
         })();
     }, []);
 
-    return (
-        <Container sx={{ paddingTop: '4%', height: '100vh' }}>
-            <Box sx={{ display: 'flex', flexDirection: 'row', height: '9vh' }}>
-                <Logo sx={{ marginRight: '4% ', fontSize: '75px' }} />
-                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <Typography variant="h3" sx={{ fontSize: '210%' }}>
-                        {' '}
-                        {name}{' '}
-                    </Typography>
-                    <Typography variant="h2" sx={{ fontSize: '190%', marginTop: '1%' }}>
-                        {' '}
-                        {prof}{' '}
-                    </Typography>
+    return(
+        <Container>
+            <Box sx={{display:"flex", flexDirection: "row", height:"9vh", margin: "4% auto auto -2%"}}>
+                <a href={window.location.origin}>
+                    <Logo sx={{fontSize:"75px"}}/>
+                </a>
+                <Box sx={{display:"flex", flexDirection: "column", marginLeft: "4%"}}>
+                    <Typography variant="h3" sx={{fontSize: "210%"}}> {name} </Typography>
+                    <Typography variant="h2" sx={{fontSize: "190%", marginTop: "1%"}}> {prof} </Typography>
                 </Box>
             </Box>
 
