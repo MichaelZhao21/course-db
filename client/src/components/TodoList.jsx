@@ -5,7 +5,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { useState } from 'react';
 import dayjs from 'dayjs';
 
-export default function Todo({ todo }) {
+export default function TodoList({ todo }) {
     const [icon, setIcon] = useState(<CheckBoxOutlineBlankIcon />);
 
     const finishItem = async () => {

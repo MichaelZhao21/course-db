@@ -13,7 +13,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import { useHistory, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-import Todo from './Todo.jsx';
+import TodoList from './Todo.jsx';
 import Lectures from './Lectures.jsx';
 import Notes from './Notes.jsx';
 import Homework from './Homework.jsx';
@@ -26,7 +26,7 @@ export default function Course() {
     const [name, setName] = useState('test');
     const [prof, setProf] = useState('test');
 
-    const [section, setSection] = useState(<Todo />);
+    const [section, setSection] = useState(<TodoList />);
     const pickSection = (choice) => setSection(choice);
 
     useEffect(() => {
@@ -56,7 +56,7 @@ export default function Course() {
                     <Grid item xs={3}>
                         <Button
                             variant="text"
-                            onClick={pickSection.bind(this, <Todo />)}
+                            onClick={pickSection.bind(this, <TodoList />)}
                             sx={{ width: '300px' }}
                         >
                             Todo

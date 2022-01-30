@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import CourseListEntry from './CourseListEntry';
 import Logo from './logo';
-import Todo from './TodoList';
+import TodoList from './TodoList';
 
 export default function Home() {
     const [courses, setCourses] = useState([]);
@@ -43,7 +43,7 @@ export default function Home() {
                     </Link>
                     <List sx={{ px: 8 }}>
                         {todos.map((t) => (
-                            <Todo todo={t} />
+                            <TodoList todo={t} />
                         ))}
                     </List>
                 </Box>
