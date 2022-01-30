@@ -10,7 +10,12 @@ import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import SaveIcon from '@mui/icons-material/Save';
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom';
+
+import Todo from "./Todo.jsx";
+import Lectures from "./Lectures.jsx";
+import Notes from "./Notes.jsx";
+import Homework from "./Homework.jsx";
 
 export default function Course() {
 
@@ -23,6 +28,9 @@ export default function Course() {
     const [name, setName] = useState('test');
     const [prof, setProf] = useState('test');
 
+    const [section, setSection] = useState(<Todo/>);
+    const pickSection = (choice) => setSection(choice);
+
     useEffect(() => {
         (async () => {
             const courseRes = await fetch(
@@ -30,8 +38,6 @@ export default function Course() {
                 ).then((data) => data.json());
                 setName(courseRes.name);
                 setProf(courseRes.professor);
-                console.log("hello");
-                console.log(this.props.location);
         })();
     }, []);
 
@@ -48,24 +54,24 @@ export default function Course() {
             <Box sx={{display:"flex", width: "100%", height:"12vh", marginTop: "4%"}}>
                 <Grid container spacing={2}>
                     <Grid item xs={3}>
-                        <Button variant="text" sx={{width: "300px"}}>Todo</Button>
+                        <Button variant="text" onClick={pickSection.bind(this, <Todo/>)} sx={{width: "300px"}}>Todo</Button>
                     </Grid>
                     <Grid item xs={3}>
-                        <Button variant="text" sx={{width: "300px"}}>Lectures</Button>
+                        <Button variant="text" onClick={pickSection.bind(this, <Lectures/>)} sx={{width: "300px"}}>Lectures</Button>
                     </Grid>
                     <Grid item xs={3}>
-                        <Button variant="text" sx={{width: "300px"}}>Notes</Button>
+                        <Button variant="text" onClick={pickSection.bind(this, <Notes/>)} sx={{width: "300px"}}>Notes</Button>
                     </Grid>
                     <Grid item xs={3}>
-                        <Button variant="text" sx={{width: "300px"}}>Homework</Button>
+                        <Button variant="text" onClick={pickSection.bind(this, <Homework/>)} sx={{width: "300px"}}>Homework</Button>
                     </Grid>
                 </Grid>
             </Box>
 
             <Divider sx={{marginTop:"-4%"}}/>
 
-            <Box>
-
+            <Box sx={{width:"100%"}}>
+                {section}
             </Box>
 
             <SpeedDial
