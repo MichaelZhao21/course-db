@@ -11,22 +11,11 @@ export default function Home() {
     // Fetch data from backend on load
     useEffect(() => {
         (async () => {
-            // const courseRes = await fetch(
-            //     'https://us-central1-course-db-22.cloudfunctions.net/app/courses'
-            // ).then((data) => data.json());
-            // setCourses(courseRes);
-            // TODO: Temp data until SOMEOME FINISHES THE BACKEND AND STOPS PLAYING FLAPPY PLANE
-            setCourses([
-                {
-                    name: 'CS 3345: Data Structures and Algorithmic Analysus',
-                    professor: 'Fenfen Rang',
-                },
-                {
-                    name: 'CS 3377: Systems Programming in UNIX and Other Environments',
-                    professor: 'Jeyakesavan Veerasamy',
-                },
-                { name: '[Course Name]', professor: '[Professor Name]' },
-            ]);
+            const courseRes = await fetch(
+                'https://us-central1-course-db-22.cloudfunctions.net/app/courses'
+            ).then((data) => data.json());
+            console.log(setCourses)
+            setCourses(courseRes);
         })();
     }, []);
 
