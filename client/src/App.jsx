@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Home from './components/Home';
 import Login from './components/Login';
+import Course from './components/Course';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 
@@ -40,9 +41,11 @@ function App() {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <BrowserRouter>
+
                 <Routes>
                     <Route exact path="/login" element={<Login />} />
                     <Route exact path="/" element={<Home />} />
+                    <Route exact path="/course/:id" element={<Course />} />
                 </Routes>
             </BrowserRouter>
         </ThemeProvider>
