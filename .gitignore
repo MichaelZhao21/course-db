@@ -66,8 +66,9 @@ node_modules/
 .env
 
 # Credentials files
-*/.permissions.json
-.permissions.json
+*/permissions.json
+permissions.json
+*/permissions.js
 
 package-lock.json
 */package-lock.json
