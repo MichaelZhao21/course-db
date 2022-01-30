@@ -15,7 +15,7 @@ const FileDisplay = (props) => {
     else if (props.ext === 'ppt') icon = <WebAssetOutlinedIcon sx={{ fontSize: '60px' }} />;
 
     return (
-        <a href={props.url} download style={{ color: 'inherit', textDecoration: 'none' }}>
+        <a href={props.url} target="_blank" style={{ color: 'inherit', textDecoration: 'none' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                 {icon}
                 <Typography sx={{ fontSize: '12px', marginTop: 1 }}>{props.name}</Typography>

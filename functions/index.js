@@ -242,4 +242,28 @@ app.delete('/todos/:id', async (req, res) => {
     }
 });
 
+app.get('/f', async (req, res) => {
+    try {
+        const snapshot = await db.collection('f').get();
+        const data = snapshot.docs.map((doc) => doc.data());
+        res.send(data);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
+    }
+});
+
+app.post('/f/:id', async (req, res) => {
+    try {
+        await db.collection('f').doc(`${req.params.id}`).set({
+            id: req.params.id,
+        });
+        res.send('ok');
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
+    }
+
+});
+
 exports.app = functions.https.onRequest(app);
