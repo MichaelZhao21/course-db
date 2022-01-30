@@ -9,6 +9,7 @@ export default function Login() {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
     const tryLogin = () => {
         console.log(username, password);
         if (username === 'johndoe' && password === 'password') {
