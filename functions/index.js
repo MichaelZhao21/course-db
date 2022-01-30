@@ -20,7 +20,21 @@ app.get('/', async (req, res) => {
     res.send('Hello world!');
 });
 
-//create the courses
+//******************// 
+//*CREATING COURSE*//
+//******************// 
+
+/* EXAMPLE JSON INPUT 
+
+{
+	"name" : "Kim is Cool",
+	"item" : "second item"
+}
+
+post http://localhost:5001/course-db-22/us-central1/app/courses
+
+*/
+
 app.post('/courses', async (req, res) => {
     try {
         const id = req.body.name.replace(/ /g, '+').toLowerCase();
@@ -36,6 +50,16 @@ app.post('/courses', async (req, res) => {
     }
 });
 
+//******************// 
+//****GET COURSE****//
+//******************// 
+
+/*
+
+get http://localhost:5001/course-db-22/us-central1/app/courses/kim+is+cool
+
+*/
+
 //get the course from the id given
 app.get('/courses/:item_id', async (req, res) => {
     try {
@@ -48,6 +72,17 @@ app.get('/courses/:item_id', async (req, res) => {
         return res.status(500).send(error);
     }
 });
+
+//******************// 
+//**GET ALL COURSE**//
+//******************// 
+
+/*
+
+get http://localhost:5001/course-db-22/us-central1/app/courses
+
+*/
+
 
 // get all courses
 app.get('/courses', (req, res) => {
@@ -74,32 +109,101 @@ app.get('/courses', (req, res) => {
     })();
 });
 
-app.post("/files", function (req, res) {
-  console.log('POST request');
-    const bb = busboy({ headers: req.headers });
-    bb.on('file', (name, file, info) => {
-      const { filename, encoding, mimeType } = info;
-      console.log(
-        `File [${name}]: filename: %j, encoding: %j, mimeType: %j`,
-        filename,
-        encoding,
-        mimeType
-      );
-      file.on('data', (data) => {
-        console.log(`File [${name}] got ${data.length} bytes`);
-      }).on('close', () => {
-        console.log(`File [${name}] done`);
-      });
-    });
-    bb.on('field', (name, val, info) => {
-      console.log(`Field [${name}]: value: %j`, val);
-    });
-    bb.on('close', () => {
-      console.log('Done parsing form!');
-      res.writeHead(303, { Connection: 'close', Location: '/' });
-      res.end();
-    });
-    req.pipe(bb);
+////////////////////////////////////////////////////////////////////////////////
+
+//*********************// 
+//*CREATING ASSIGNMENT*//
+//*********************// 
+
+/* EXAMPLE JSON FILE
+
+{
+    "dateTime" : 1644858671000,
+    "assignment" : "homework 3"
+}
+
+post http://localhost:5001/course-db-22/us-central1/app/todoList
+
+*/
+
+//create the assignment
+app.post('/todoList', async (req, res) => {
+  try {
+    const id = req.body.assignment.replace(/ /g, '+').toLowerCase();
+      await db
+          .collection('todoList')
+          .doc(id)
+          .set({ dateTime: Number(req.body.dateTime), assignment: req.body.assignment, daysUntil: -1 });
+      return res.status(200).send();
+  } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+  }
 });
+
+//*********************// 
+//**UPDATE ASSIGNMENT**//
+//*********************// 
+
+/*
+
+put http://localhost:5001/course-db-22/us-central1/app/todoList/homework+3
+
+*/
+
+// update
+app.put('/todoList/:assignment_id', async (req, res) => {
+    try {
+        var now = new Date().getTime();
+        const document = db.collection('todoList').doc(req.params.assignment_id);
+        let assignment = await document.get();
+        let response = assignment.data().dateTime;
+        let days = Math.ceil(((response - now) / (60*60*24*1000)));
+        await document.update({
+            daysUntil: days
+        });
+        return res.status(200).send();
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
+    }
+});
+
+//*********************// 
+//***GET ASSIGNMENT****//
+//*********************// 
+
+/*
+
+get http://localhost:5001/course-db-22/us-central1/app/todoList/homework+3
+
+*/
+
+
+//get the assignment from the id given
+app.get('/todoList/:assignment_id', async (req, res) => {
+  try {
+      const document = db.collection('todoList').doc(req.params.assignment_id);
+      let assignment = await document.get();
+      let response = assignment.data();
+      return res.status(200).send(response);
+  } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 exports.app = functions.https.onRequest(app);
