@@ -3,6 +3,7 @@ const admin = require('firebase-admin');
 const express = require('express');
 const cors = require('cors');
 const serviceAccount = require('./permissions.json');
+const busboy = require('busboy');
 
 // Initialize express app
 const app = express();
@@ -71,6 +72,34 @@ app.get('/courses', (req, res) => {
             return res.status(500).send(error);
         }
     })();
+});
+
+app.post("/files", function (req, res) {
+  console.log('POST request');
+    const bb = busboy({ headers: req.headers });
+    bb.on('file', (name, file, info) => {
+      const { filename, encoding, mimeType } = info;
+      console.log(
+        `File [${name}]: filename: %j, encoding: %j, mimeType: %j`,
+        filename,
+        encoding,
+        mimeType
+      );
+      file.on('data', (data) => {
+        console.log(`File [${name}] got ${data.length} bytes`);
+      }).on('close', () => {
+        console.log(`File [${name}] done`);
+      });
+    });
+    bb.on('field', (name, val, info) => {
+      console.log(`Field [${name}]: value: %j`, val);
+    });
+    bb.on('close', () => {
+      console.log('Done parsing form!');
+      res.writeHead(303, { Connection: 'close', Location: '/' });
+      res.end();
+    });
+    req.pipe(bb);
 });
 
 exports.app = functions.https.onRequest(app);
