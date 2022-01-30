@@ -7,17 +7,20 @@ import { Box, Typography } from '@mui/material';
 
 // ext: (pdf, img, vid, ppt) File extension to use -> determines picture displayed
 // name: (string) Name of the file
+// url: (string) URL to download file
 const FileDisplay = (props) => {
-    let icon = <DescriptionOutlinedIcon sx={{ fontSize: '60px'}} />;
-    if (props.ext === 'img') icon = <ImageOutlinedIcon  sx={{ fontSize: '60px'}} />;
-    else if (props.ext === 'vid') icon = <OndemandVideoOutlinedIcon  sx={{ fontSize: '60px'}} />;
-    else if (props.ext === 'ppt') icon = <WebAssetOutlinedIcon  sx={{ fontSize: '60px'}} />;
+    let icon = <DescriptionOutlinedIcon sx={{ fontSize: '60px' }} />;
+    if (props.ext === 'img') icon = <ImageOutlinedIcon sx={{ fontSize: '60px' }} />;
+    else if (props.ext === 'vid') icon = <OndemandVideoOutlinedIcon sx={{ fontSize: '60px' }} />;
+    else if (props.ext === 'ppt') icon = <WebAssetOutlinedIcon sx={{ fontSize: '60px' }} />;
 
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-            {icon}
-            <Typography sx={{ fontSize: '12px', marginTop: 1 }}>{props.name}</Typography>
-        </Box>
+        <a href={props.url} download style={{ color: 'inherit', textDecoration: 'none' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+                {icon}
+                <Typography sx={{ fontSize: '12px', marginTop: 1 }}>{props.name}</Typography>
+            </Box>
+        </a>
     );
 };
 

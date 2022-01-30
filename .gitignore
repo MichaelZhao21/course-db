@@ -69,6 +69,7 @@ node_modules/
 */permissions.json
 permissions.json
 */permissions.js
+**/*/permissions.js
 
 package-lock.json
 */package-lock.json

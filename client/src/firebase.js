@@ -1,7 +1,7 @@
-import firebase from 'firebase';
+import firebase from 'firebase/compat/app';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 
-import firebaseConfig from '../permissions';
+import firebaseConfig from './permissions';
 firebase.initializeApp(firebaseConfig);
 
 export async function uploadImage(img) {
