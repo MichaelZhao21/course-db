@@ -9,19 +9,13 @@ import Divider from '@mui/material/Divider';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
-import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
 import SaveIcon from '@mui/icons-material/Save';
-import PrintIcon from '@mui/icons-material/Print';
-import ShareIcon from '@mui/icons-material/Share';
 import { useHistory, useParams } from 'react-router-dom'
 
 export default function Course() {
 
     const actions = [
-        { icon: <FileCopyIcon />, name: 'Copy' },
-        { icon: <SaveIcon />, name: 'Save' },
-        { icon: <PrintIcon />, name: 'Print' },
-        { icon: <ShareIcon />, name: 'Share' },
+        { icon: <SaveIcon />, name: 'Upload' },
     ];
 
     const { id } = useParams();
@@ -44,7 +38,7 @@ export default function Course() {
     return(
         <Container>
             <Box sx={{display:"flex", flexDirection: "row", height:"9vh", marginTop: "4%"}}>
-                <Logo sx={{marginRight: "4% ", fontSize:"75px"}}/>
+                    <Logo sx={{marginRight: "4% ", fontSize:"75px"}}/>
                 <Box sx={{display:"flex", flexDirection: "column"}}>
                     <Typography variant="h3" sx={{fontSize: "210%"}}> {name} </Typography>
                     <Typography variant="h2" sx={{fontSize: "190%", marginTop: "1%"}}> {prof} </Typography>
