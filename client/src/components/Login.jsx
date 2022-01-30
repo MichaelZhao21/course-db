@@ -7,7 +7,6 @@ import { useState } from 'react';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import FormControl from '@mui/material/FormControl';
-import FormHelperText from '@mui/material/FormHelperText';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
@@ -25,6 +24,10 @@ export default function Login() {
             navigate('/');
         }
     };
+
+    const newAccount = () => {
+        navigate('/newAccount');
+    }
 
     const handleClickShowPassword = () => {
         setVisibility(!visibility);
@@ -81,8 +84,12 @@ export default function Login() {
                         />
                 </FormControl>
 
-                <Button variant="text" onClick={tryLogin} sx={{ margin: '2.5% auto auto auto' }}>
+                <Button variant="outlined" onClick={tryLogin} sx={{ margin: '2.5% auto auto auto' }}>
                     Submit
+                </Button>
+
+                <Button variant="text" onClick={newAccount} sx={{ margin: '2.5% auto auto auto', color: (theme) => `solid 5px ${theme.palette.secondary.main}`}}>
+                    New User? Register
                 </Button>
             </Box>
         </Container>
