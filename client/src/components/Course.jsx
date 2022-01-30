@@ -9,25 +9,28 @@ import Divider from '@mui/material/Divider';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
-import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
 import SaveIcon from '@mui/icons-material/Save';
-import PrintIcon from '@mui/icons-material/Print';
-import ShareIcon from '@mui/icons-material/Share';
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
+import Todo from "./Todo.jsx";
+import Lectures from "./Lectures.jsx";
+import Notes from "./Notes.jsx";
+import Homework from "./Homework.jsx";
 
 export default function Course() {
 
     const actions = [
-        { icon: <FileCopyIcon />, name: 'Copy' },
-        { icon: <SaveIcon />, name: 'Save' },
-        { icon: <PrintIcon />, name: 'Print' },
-        { icon: <ShareIcon />, name: 'Share' },
+        { icon: <SaveIcon />, name: 'Upload' },
     ];
 
     const { id } = useParams();
 
     const [name, setName] = useState('test');
     const [prof, setProf] = useState('test');
+
+    const [section, setSection] = useState(<Todo/>);
+    const pickSection = (choice) => setSection(choice);
 
     useEffect(() => {
         (async () => {
@@ -36,16 +39,16 @@ export default function Course() {
                 ).then((data) => data.json());
                 setName(courseRes.name);
                 setProf(courseRes.professor);
-                console.log("hello");
-                console.log(this.props.location);
         })();
     }, []);
 
     return(
         <Container>
-            <Box sx={{display:"flex", flexDirection: "row", height:"9vh", marginTop: "4%"}}>
-                <Logo sx={{marginRight: "4% ", fontSize:"75px"}}/>
-                <Box sx={{display:"flex", flexDirection: "column"}}>
+            <Box sx={{display:"flex", flexDirection: "row", height:"9vh", margin: "4% auto auto -2%"}}>
+                <a href={window.location.origin}>
+                    <Logo sx={{fontSize:"75px"}}/>
+                </a>
+                <Box sx={{display:"flex", flexDirection: "column", marginLeft: "4%"}}>
                     <Typography variant="h3" sx={{fontSize: "210%"}}> {name} </Typography>
                     <Typography variant="h2" sx={{fontSize: "190%", marginTop: "1%"}}> {prof} </Typography>
                 </Box>
@@ -54,24 +57,24 @@ export default function Course() {
             <Box sx={{display:"flex", width: "100%", height:"12vh", marginTop: "4%"}}>
                 <Grid container spacing={2}>
                     <Grid item xs={3}>
-                        <Button variant="text" sx={{width: "300px"}}>Todo</Button>
+                        <Button variant="text" onClick={pickSection.bind(this, <Todo/>)} sx={{width: "300px"}}>Todo</Button>
                     </Grid>
                     <Grid item xs={3}>
-                        <Button variant="text" sx={{width: "300px"}}>Lectures</Button>
+                        <Button variant="text" onClick={pickSection.bind(this, <Lectures/>)} sx={{width: "300px"}}>Lectures</Button>
                     </Grid>
                     <Grid item xs={3}>
-                        <Button variant="text" sx={{width: "300px"}}>Notes</Button>
+                        <Button variant="text" onClick={pickSection.bind(this, <Notes/>)} sx={{width: "300px"}}>Notes</Button>
                     </Grid>
                     <Grid item xs={3}>
-                        <Button variant="text" sx={{width: "300px"}}>Homework</Button>
+                        <Button variant="text" onClick={pickSection.bind(this, <Homework/>)} sx={{width: "300px"}}>Homework</Button>
                     </Grid>
                 </Grid>
             </Box>
 
             <Divider sx={{marginTop:"-4%"}}/>
 
-            <Box>
-
+            <Box sx={{width:"100%"}}>
+                {section}
             </Box>
 
             <SpeedDial
