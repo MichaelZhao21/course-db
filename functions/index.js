@@ -20,9 +20,9 @@ app.get('/', async (req, res) => {
     res.send('Hello world!');
 });
 
-//******************// 
+//******************//
 //*CREATING COURSE*//
-//******************// 
+//******************//
 
 /* EXAMPLE JSON INPUT 
 
@@ -50,9 +50,9 @@ app.post('/courses', async (req, res) => {
     }
 });
 
-//******************// 
+//******************//
 //****GET COURSE****//
-//******************// 
+//******************//
 
 /*
 
@@ -73,16 +73,15 @@ app.get('/courses/:item_id', async (req, res) => {
     }
 });
 
-//******************// 
+//******************//
 //**GET ALL COURSE**//
-//******************// 
+//******************//
 
 /*
 
 get http://localhost:5001/course-db-22/us-central1/app/courses
 
 */
-
 
 // get all courses
 app.get('/courses', (req, res) => {
@@ -111,9 +110,9 @@ app.get('/courses', (req, res) => {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-//*********************// 
+//*********************//
 //*CREATING ASSIGNMENT*//
-//*********************// 
+//*********************//
 
 /* EXAMPLE JSON FILE
 
@@ -127,23 +126,36 @@ post http://localhost:5001/course-db-22/us-central1/app/todoList
 */
 
 //create the assignment
-app.post('/todoList', async (req, res) => {
-  try {
-    const id = req.body.assignment.replace(/ /g, '+').toLowerCase();
-      await db
-          .collection('todoList')
-          .doc(id)
-          .set({ dateTime: Number(req.body.dateTime), assignment: req.body.assignment, daysUntil: -1 });
-      return res.status(200).send();
-  } catch (error) {
-      console.log(error);
-      return res.status(500).send(error);
-  }
+app.post('/todos', async (req, res) => {
+    try {
+        const id = req.body.name.replace(/ /g, '+').toLowerCase();
+        await db
+            .collection('todos')
+            .doc(id)
+            .set({
+                dateTime: Number(req.body.dateTime),
+                name: req.body.name,
+                dueIn: calcDue(Number(req.body.dateTime)),
+                courseId: req.body.courseId,
+            });
+        return res.status(200).send();
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
+    }
 });
 
-//*********************// 
+/**
+ * Calculate due until time
+ *
+ * @param {number} datetime The UTC date time string
+ * @return {number} Days from now until datetime
+ */
+const calcDue = (datetime) => Math.ceil((datetime - new Date().getTime()) / (60 * 60 * 24 * 1000));
+
+//*********************//
 //**UPDATE ASSIGNMENT**//
-//*********************// 
+//*********************//
 
 /*
 
@@ -151,16 +163,16 @@ put http://localhost:5001/course-db-22/us-central1/app/todoList/homework+3
 
 */
 
+// TODO: why on earth does this exist
 // update
-app.put('/todoList/:assignment_id', async (req, res) => {
+app.put('/todos/:assignment_id', async (req, res) => {
     try {
-        var now = new Date().getTime();
-        const document = db.collection('todoList').doc(req.params.assignment_id);
-        let assignment = await document.get();
-        let response = assignment.data().dateTime;
-        let days = Math.ceil(((response - now) / (60*60*24*1000)));
+        const document = db.collection('todos').doc(req.params.assignment_id);
+        const assignment = await document.get();
+        const datetime = assignment.data().dateTime;
+        const days = calcDue(datetime);
         await document.update({
-            daysUntil: days
+            dueIn: days,
         });
         return res.status(200).send();
     } catch (error) {
@@ -169,9 +181,9 @@ app.put('/todoList/:assignment_id', async (req, res) => {
     }
 });
 
-//*********************// 
+//*********************//
 //***GET ASSIGNMENT****//
-//*********************// 
+//*********************//
 
 /*
 
@@ -179,31 +191,42 @@ get http://localhost:5001/course-db-22/us-central1/app/todoList/homework+3
 
 */
 
-
 //get the assignment from the id given
-app.get('/todoList/:assignment_id', async (req, res) => {
-  try {
-      const document = db.collection('todoList').doc(req.params.assignment_id);
-      let assignment = await document.get();
-      let response = assignment.data();
-      return res.status(200).send(response);
-  } catch (error) {
-      console.log(error);
-      return res.status(500).send(error);
-  }
+app.get('/todos/:assignment_id', async (req, res) => {
+    try {
+        const document = db.collection('todos').doc(req.params.assignment_id);
+        let assignment = await document.get();
+        let response = assignment.data();
+        return res.status(200).send(response);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
+    }
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
+// Returns a list of all assignments
+app.get('/todos', async (req, res) => {
+    try {
+        let query = db.collection('todos');
+        let response = [];
+        await query.get().then((querySnapshot) => {
+            let docs = querySnapshot.docs;
+            for (let doc of docs) {
+                const selectedItem = {
+                    id: doc.id,
+                    dateTime: doc.data().dateTime,
+                    name: doc.data().name,
+                    dueIn: doc.data().dueIn,
+                    courseId: doc.data().courseId,
+                };
+                response.push(selectedItem);
+            }
+        });
+        return res.status(200).send(response);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
+    }
+});
 
 exports.app = functions.https.onRequest(app);
