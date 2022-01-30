@@ -23,6 +23,13 @@ const theme = createTheme({
             paper: '#2B2A2C',
         },
     },
+    typography: {
+        h2: {
+            fontFamily: 'Open Sans',
+            fontWeight: 300,
+            fontSize: '70px'
+        }
+    }
 });
 
 function App() {
