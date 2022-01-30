@@ -28,6 +28,9 @@ const theme = createTheme({
             fontFamily: 'Open Sans',
             fontWeight: 300,
             fontSize: '70px'
+        },
+        h4: {
+            fontFamily: 'hind',
         }
     }
 });
