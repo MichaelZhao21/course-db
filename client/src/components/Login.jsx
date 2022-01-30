@@ -9,6 +9,7 @@ export default function Login(){
                         backgroundColor: theme => theme.palette.primary.main, 
                         width: "50vw",
                         height: "75vh",
+                        margin: "auto",
                         borderRadius: "30px"
                         }}>
                 <Container sx={{ display: "flex",
