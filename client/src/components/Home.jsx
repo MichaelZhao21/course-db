@@ -1,4 +1,4 @@
-import { Box, List, Typography } from '@mui/material';
+import { Box, Link, List, Typography } from '@mui/material';
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -16,7 +16,7 @@ export default function Home() {
             const courseRes = await fetch(
                 'https://us-central1-course-db-22.cloudfunctions.net/app/courses'
             ).then((data) => data.json());
-            setCourses(courseRes);
+            setCourses(courseRes.sort((a, b) => a.name - b.name));
 
             const todoRes = await fetch(
                 'https://us-central1-course-db-22.cloudfunctions.net/app/todos'
@@ -34,6 +34,13 @@ export default function Home() {
             </Box>
             <Box sx={{ display: 'flex' }}>
                 <Box sx={{ flexBasis: '50%', marginRight: '5%' }}>
+                    <Link
+                        href="/add/todos"
+                        color="secondary"
+                        sx={{ textAlign: 'left', display: 'block', marginLeft: 10 }}
+                    >
+                        Add New Todo
+                    </Link>
                     <List sx={{ px: 8 }}>
                         {todos.map((t) => (
                             <Todo todo={t} />
@@ -41,6 +48,12 @@ export default function Home() {
                     </List>
                 </Box>
                 <Box sx={{ flexBasis: '50%', marginLeft: '5%' }}>
+                    <Link
+                        href="/add/courses"
+                        sx={{ textAlign: 'right', display: 'block', marginRight: 10 }}
+                    >
+                        Add Course
+                    </Link>
                     <List sx={{ px: 8 }}>
                         {courses.map((c) => (
                             <CourseListEntry course={c} />

@@ -49,7 +49,7 @@ export default function Login() {
             >
                 <Logo sx={{ width: '10%', height: '10%', margin: '7.5% auto auto auto' }} />
                 <Typography variant="h2" sx={{ margin: '5% auto auto auto' }}>
-                    Login to courseDB
+                    Login to Offsight
                 </Typography>
                 <TextField
                     id="usernameField"
