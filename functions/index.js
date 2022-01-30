@@ -17,14 +17,16 @@ const db = admin.firestore();
 
 app.get('/', async (req, res) => {
     res.send('Hello world!');
-})
+});
 
 //create the courses
 app.post('/courses', async (req, res) => {
     try {
-        id = req.body.name.replace(/ /g, '+');
-        id = id.toLowerCase();
-        await db.collection('courses').doc(id).set({ item: req.body.item, name: req.body.name });
+        const id = req.body.name.replace(/ /g, '+').toLowerCase();
+        await db
+            .collection('courses')
+            .doc(id)
+            .set({ professor: req.body.professor, name: req.body.name });
 
         return res.status(200).send();
     } catch (error) {
@@ -57,7 +59,7 @@ app.get('/courses', (req, res) => {
                 for (let doc of docs) {
                     const selectedItem = {
                         id: doc.id,
-                        item: doc.data().item,
+                        professor: doc.data().professor,
                         name: doc.data().name,
                     };
                     response.push(selectedItem);
