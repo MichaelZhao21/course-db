@@ -4,9 +4,11 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import CourseListEntry from './CourseListEntry';
 import Logo from './logo';
+import Todo from './TodoList';
 
 export default function Home() {
     const [courses, setCourses] = useState([]);
+    const [todos, setTodos] = useState([]);
 
     // Fetch data from backend on load
     useEffect(() => {
@@ -14,8 +16,12 @@ export default function Home() {
             const courseRes = await fetch(
                 'https://us-central1-course-db-22.cloudfunctions.net/app/courses'
             ).then((data) => data.json());
-            console.log(setCourses)
             setCourses(courseRes);
+
+            const todoRes = await fetch(
+                'https://us-central1-course-db-22.cloudfunctions.net/app/todos'
+            ).then((data) => data.json());
+            setTodos(todoRes.sort((a, b) => a.dateTime - b.dateTime));
         })();
     }, []);
 
@@ -27,7 +33,13 @@ export default function Home() {
                 <Typography variant="h2">Courses</Typography>
             </Box>
             <Box sx={{ display: 'flex' }}>
-                <Box sx={{ flexBasis: '50%', marginRight: '5%' }}>No content here</Box>
+                <Box sx={{ flexBasis: '50%', marginRight: '5%' }}>
+                    <List sx={{ px: 8 }}>
+                        {todos.map((t) => (
+                            <Todo todo={t} />
+                        ))}
+                    </List>
+                </Box>
                 <Box sx={{ flexBasis: '50%', marginLeft: '5%' }}>
                     <List sx={{ px: 8 }}>
                         {courses.map((c) => (

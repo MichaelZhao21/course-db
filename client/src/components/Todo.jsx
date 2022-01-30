@@ -1,14 +1,8 @@
-import { Container, Box, List, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import Logo from './logo';
 
-export default function Todo() {
+const Todo = () => {
+    return <Box>hi</Box>;
+};
 
-    return(
-        <Box>
-            
-        </Box>
-    )
-}
+export default Todo;

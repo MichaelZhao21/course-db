@@ -31,7 +31,7 @@ const CourseListEntry = ({ course }) => {
                     width: '5px',
                 }}
             ></Box>
-            <Typography variant="h4" sx={{ flexGrow: 1, fontSize: '36px'}}>
+            <Typography variant="h4" sx={{ flexGrow: 1, fontSize: '32px'}}>
                 {course.name}
             </Typography>
             <Typography

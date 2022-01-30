@@ -229,4 +229,17 @@ app.get('/todos', async (req, res) => {
     }
 });
 
+/**
+ * Delete one todo object
+ */
+app.delete('/todos/:id', async (req, res) => {
+    try {
+        await db.collection('todos').doc(req.params.id).delete();
+        res.send('ok');
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
+    }
+});
+
 exports.app = functions.https.onRequest(app);
