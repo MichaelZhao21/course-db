@@ -11,7 +11,6 @@ import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import SaveIcon from '@mui/icons-material/Save';
 import { useHistory, useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
 import TodoList from './Todo.jsx';
 import Lectures from './Lectures.jsx';
@@ -95,20 +94,6 @@ export default function Course() {
             <Divider sx={{ marginTop: '-4%' }} />
 
             <Box sx={{ width: '100' }}>{section}</Box>
-
-            <SpeedDial
-                ariaLabel="SpeedDial basic example"
-                sx={{ position: 'absolute', bottom: 16, right: 16 }}
-                icon={<SpeedDialIcon />}
-            >
-                {actions.map((action) => (
-                    <SpeedDialAction
-                        key={action.name}
-                        icon={action.icon}
-                        tooltipTitle={action.name}
-                    />
-                ))}
-            </SpeedDial>
         </Container>
     );
 }

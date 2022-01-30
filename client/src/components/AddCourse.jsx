@@ -60,7 +60,7 @@ const AddCourse = () => {
                 sx={{ my: 2, width: 500 }}
             />
             <Box sx={{ display: 'flex', marginTop: 6 }}>
-                <Button variant="text" color="error" size="small" sx={{ marginRight: 4 }}>
+                <Button variant="text" color="error" size="small" sx={{ marginRight: 4 }} onClick={() => {navigate('/')}}>
                     Cancel
                 </Button>
                 <Button color="success" variant="contained" size="large" onClick={submit}>

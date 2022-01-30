@@ -16,7 +16,7 @@ export default function Home() {
             const courseRes = await fetch(
                 'https://us-central1-course-db-22.cloudfunctions.net/app/courses'
             ).then((data) => data.json());
-            setCourses(courseRes.sort((a, b) => a.name - b.name));
+            setCourses(courseRes.sort((a, b) => a.name.localeCompare(b.name)));
 
             const todoRes = await fetch(
                 'https://us-central1-course-db-22.cloudfunctions.net/app/todos'
@@ -29,7 +29,7 @@ export default function Home() {
         <Box sx={{ mx: 2 }}>
             <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
                 <Typography variant="h2">Todo List</Typography>
-                <Logo fontSize="120px" sx={{ mx: 30 }} />
+                <Logo fontSize="120px" sx={{ mx: 38 }} />
                 <Typography variant="h2">Courses</Typography>
             </Box>
             <Box sx={{ display: 'flex' }}>
@@ -41,7 +41,7 @@ export default function Home() {
                     >
                         Add New Todo
                     </Link>
-                    <List sx={{ px: 8 }}>
+                    <List sx={{ paddingLeft: 6, paddingRight: 2 }}>
                         {todos.map((t) => (
                             <TodoList todo={t} />
                         ))}

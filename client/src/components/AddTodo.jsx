@@ -41,7 +41,7 @@ const AddTodo = () => {
             const courseRes = await fetch(
                 'https://us-central1-course-db-22.cloudfunctions.net/app/courses'
             ).then((data) => data.json());
-            setCourses(courseRes.sort((a, b) => a.name - b.name));
+            setCourses(courseRes.sort((a, b) => a.name.localeCompare(b.name)));
         })();
     });
 
@@ -98,7 +98,7 @@ const AddTodo = () => {
                 }}
             ></DateTimePicker>
             <Box sx={{ display: 'flex', marginTop: 6 }}>
-                <Button variant="text" color="error" size="small" sx={{ marginRight: 4 }}>
+                <Button variant="text" color="error" size="small" sx={{ marginRight: 4 }} onClick={() => {navigate('/')}}>
                     Cancel
                 </Button>
                 <Button color="success" variant="contained" size="large" onClick={submit}>
