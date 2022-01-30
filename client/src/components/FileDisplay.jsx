@@ -9,9 +9,9 @@ import { Box, Typography } from '@mui/material';
 // name: (string) Name of the file
 const FileDisplay = (props) => {
     let icon = <DescriptionOutlinedIcon sx={{ fontSize: '60px'}} />;
-    if (props.ext === 'img') icon = <ImageOutlinedIcon />;
-    else if (props.ext === 'vid') icon = <OndemandVideoOutlinedIcon />;
-    else if (props.ext === 'ppt') icon = <WebAssetOutlinedIcon />;
+    if (props.ext === 'img') icon = <ImageOutlinedIcon  sx={{ fontSize: '60px'}} />;
+    else if (props.ext === 'vid') icon = <OndemandVideoOutlinedIcon  sx={{ fontSize: '60px'}} />;
+    else if (props.ext === 'ppt') icon = <WebAssetOutlinedIcon  sx={{ fontSize: '60px'}} />;
 
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
